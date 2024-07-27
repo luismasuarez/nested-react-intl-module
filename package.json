@@ -1,7 +1,7 @@
 {
   "name": "nested-react-intl",
   "description": "A new npm module",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -9,12 +9,6 @@
   "scripts": {
     "build": "tsup"
   },
-  "keywords": [
-    "npm",
-    "module",
-    "template",
-    "starter scaffold"
-  ],
   "author": "Luis Manuel Causa Suarez",
   "license": "MIT",
   "devDependencies": {
@@ -26,5 +20,19 @@
     "react-dom": "^18.3.1",
     "react-intl": "^6.6.8",
     "react-router-dom": "^6.25.1"
-  }
+  },
+  "keywords": [
+    "react",
+    "internationalization",
+    "localization",
+    "nested-react-intl",
+    "react-localization",
+    "locale",
+    "translations",
+    "multi-language",
+    "locale-switcher",
+    "translation-hooks",
+    "language-selector",
+    "intl-utils"
+  ]
 }
