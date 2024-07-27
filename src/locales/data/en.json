@@ -1,0 +1,12 @@
+{
+  "module": {
+    "title": "Nested React Internacionalization",
+    "locale_switcher": {
+      "en": "English",
+      "es": "Spanish"
+    },
+    "main": {
+      "description": "This is a very quick module to add nested translation to your React proyect"
+    }
+  }
+}
