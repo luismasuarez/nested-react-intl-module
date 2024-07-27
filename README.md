@@ -1,44 +1,43 @@
-# 📦 Your npm Module Template
+# React Nested Translations
 
-Welcome to your new npm module template! 🎉 Here’s a quick guide to get started.
+This package allows you to use nested translations in React components.
 
-## 📁 Project Structure
+## Installation
 
-- **`/src`**: Source code
-  - `index.ts`: Entry point
-  - `starter_example.ts`: Example functions
-  - `types.ts`: Type definitions
-- **`package.json`**: Project metadata and scripts
-- **`tsconfig.json`**: TypeScript configuration
-- **`tsup.config.ts`**: Build configuration
+```bash
+npm install nested-react-intl
+```
 
-## ✏️ Customization Steps
+## Usage
 
-1. **Edit `src/starter_example.ts`**  
-   Modify or add functions as needed.
+Wrap your root component in a `NestedIntlProvider` Provider:
 
-2. **Update `src/types.ts`**  
-   Define or change types for your module.
+IMPORTANT: You need to pass languages prop ro NestedIntlProvider like:
 
-3. **Configure `src/index.ts`**  
-   Export functions and types from this file.
+```jsx
+import { NestedIntlProvider } from "nested-react-intl";
 
-4. **Update `package.json`**  
-   Set your module’s name, description, and other details.
+import en from "../translations/en.json";
+import es from "../translations/es.json";
 
-5. **Build Your Module**  
-   Run `npm run build` to compile the TypeScript code.
+function App() {
+  return (
+    <MyCustomProvider>
+      <NestedIntlProvider
+        languages={{
+          en: { test: "Test", nestedMessage: { msg: "Message" } },
+          es: { test: "Prueba" , nestedMessage: { msg: "Mensaje" } }},
+        }}
+      >
+        <MyCustomComponent />
+      </NestedIntlProvider>
+    </MyCustomProvider>
+  );
+}
+```
 
-## 🚀 Publishing Your Module
+To use a typical `<FormattedMessage />` pass the nested id like:
 
-1. **Login to npm**  
-   If you haven’t logged in yet, run:
-   ```bash
-   npm login
-   ```
-2. **Publish to npm**
-   ```bash
-   npm publish
-   ```
-
-Happy coding! 🚀
+```jsx
+<FormattedMessage id="nestedMessage.msg" />
+```
