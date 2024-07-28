@@ -1,25 +1,18 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { LocalesLibrary } from "../locales/locales";
-import { Locale } from "../types";
-import { flattenMessages, getStoredLocale, setStoredLocale } from "../utils";
+import { useCallback, useMemo, useState } from "react";
+import { INestedMessages } from "../interfaces";
+import { flattenMessages, getDefaultLocale, setStoredLocale } from "../utils";
 
-export const useLocale = () => {
-  const [locale, setLocale] = useState<Locale>("en");
-
-  useEffect(() => {
-    const storedLocale = getStoredLocale() as Locale;
-    if (storedLocale) {
-      setLocale(storedLocale);
-    }
-  }, []);
+export const useLocale = (locales: Record<string, INestedMessages>) => {
+  const defaultLocale = getDefaultLocale();
+  const [locale, setLocale] = useState<string>(defaultLocale);
 
   const flattenedMessages = useMemo(
-    () => flattenMessages(LocalesLibrary[locale]),
+    () => flattenMessages(locales[locale]),
     [locale]
   );
 
   const switchLocale = useCallback(
-    (newLocale: Locale) => {
+    (newLocale: string) => {
       if (newLocale === locale) return;
 
       setLocale(newLocale);
@@ -37,5 +30,10 @@ export const useLocale = () => {
     [locale]
   );
 
-  return { locale, switchLocale, translations: flattenedMessages };
+  return {
+    locale,
+    setLocale,
+    switchLocale,
+    translations: flattenedMessages,
+  };
 };

@@ -1,7 +1,5 @@
 import { en } from "../locales/data";
 
-export type Locale = "en" | "es";
-
 export type SayHelloProps = {
   firstName: string;
   lastName?: string;

@@ -1,3 +1,4 @@
 export * from "./components/NestedIntlProvider";
 export * from "./hooks";
-export * from "./starter_example";
+export * from "./interfaces";
+export * from "./types";

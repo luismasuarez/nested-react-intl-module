@@ -1,10 +1,10 @@
 # 📦 nested-react-intl
 
-**nested-react-intl** es una biblioteca para manejar la internacionalización en proyectos React. Incluye un provider y hooks personalizados para facilitar el manejo de idiomas y traducciones en tu aplicación.
+**nested-react-intl** es una biblioteca para manejar la internacionalización en proyectos React. Incluye un provider y hooks personalizados para facilitar el manejo de idiomas y traducciones en tu aplicación de manera anidada.
 
 ## 🚀 Instalación
 
-Puedes instalar el módulo usando npm o yarn:
+Puedes instalar el paquete usando npm o yarn:
 
 ```bash
 npm install nested-react-intl
@@ -23,35 +23,69 @@ yarn add nested-react-intl
 El provider `NestedIntlProvider` proporciona el contexto para la internacionalización. Envuelve tu aplicación con este provider en el nivel más alto.
 
 ```jsx
-import React from 'react';
-import NestedIntlProvider from 'nested-react-intl';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import { INestedMessages, NestedIntlProvider } from "./dist/index";
+import en from "./locales/en.json";
+import es from "./locales/es.json";
 
-const App = () => (
-  <NestedIntlProvider>
-    <YourApp />
-  </NestedIntlProvider>
+export type Locale = "en" | "es";
+
+export const LocalesLibrary: Record<Locale, INestedMessages> = {
+  en,
+  es,
+};
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <NestedIntlProvider locales={LocalesLibrary}>
+      <App />
+    </NestedIntlProvider>
+  </React.StrictMode>
 );
-
-export default App;
 ```
 
 ### Hooks
 
-#### `useLocale`
+#### `useTranslate`
 
-El hook `useLocale` proporciona la funcionalidad para gestionar el idioma actual y cambiarlo.
+El hook `useTranslate` proporciona una función para traducir las claves de los mensajes.
 
 ```jsx
-import React from 'react';
-import { useLocale } from 'nested-react-intl';
+import React from "react";
+import { useTranslate } from "nested-react-intl";
+
+const AppTitleBar = () => {
+  const { t } = useTranslate();
+
+  return <h1>{t("app.title")}</h1>;
+};
+
+export default AppTitleBar;
+```
+
+#### `useNestedIntlContext`
+
+El hook `useNestedIntlContext` proporciona una función para seleccionar los idiomas.
+
+```jsx
+import React from "react";
+import useNestedIntlContext from "./src/hooks/useNestedIntlContext";
+import { Locale } from "./main";
 
 const LanguageSwitcher = () => {
-  const { locale, switchLocale } = useLocale();
-
+  const { selectLanguage } = useNestedIntlContext();
   return (
     <div>
-      <button onClick={() => switchLocale('en')}>English</button>
-      <button onClick={() => switchLocale('es')}>Español</button>
+      <select
+        name="lang"
+        id="lang"
+        onChange={(e) => selectLanguage(e.target.value as Locale)}
+      >
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+      </select>
     </div>
   );
 };
@@ -59,54 +93,26 @@ const LanguageSwitcher = () => {
 export default LanguageSwitcher;
 ```
 
-#### `useTranslate`
-
-El hook `useTranslate` proporciona una función para traducir las claves de los mensajes.
-
-```jsx
-import React from 'react';
-import { useTranslate } from 'nested-react-intl';
-
-const Greeting = () => {
-  const { t } = useTranslate();
-
-  return <h1>{t('hello')}</h1>;
-};
-
-export default Greeting;
-```
-
 ## 🔍 Ejemplo
 
-Aquí hay un ejemplo completo de cómo utilizar el módulo:
+Aca te muestro un ejemplo completo de cómo utilizar el módulo:
 
 ```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import NestedIntlProvider from 'nested-react-intl';
-import LanguageSwitcher from './LanguageSwitcher';
-import Greeting from './Greeting';
+import React from "react";
+import ReactDOM from "react-dom";
+import { NestedIntlProvider } from "nested-react-intl";
+import LanguageSwitcher from "./LanguageSwitcher";
+import AppTitleBar from "./AppTitleBar";
 
 const App = () => (
-  <NestedIntlProvider>
-    <div>
-      <LanguageSwitcher />
-      <Greeting />
-    </div>
-  </NestedIntlProvider>
+  <div>
+    <AppTitleBar />
+    <LanguageSwitcher />
+  </div>
 );
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export default App;
 ```
-
-## 📚 Archivos de Traducción
-
-Los archivos de traducción por defecto están en `src/locales/en.json` y `src/locales/es.json`. Puedes agregar más idiomas simplemente creando nuevos archivos JSON en la misma carpeta con el formato adecuado.
-
-## 🔧 Utilidades
-
-- **`flattenMessages`**: Convierte mensajes anidados en un formato plano.
-- **`getStoredLocale`** y **`setStoredLocale`**: Funciones para obtener y guardar el idioma en el almacenamiento local.
 
 ## 📝 Contribuciones
 

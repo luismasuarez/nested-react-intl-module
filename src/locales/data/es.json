@@ -1,6 +1,6 @@
 {
   "module": {
-    "title": "Nested React Internacionalization",
+    "title": "Traducciones anidadas para React",
     "locale_switcher": {
       "en": "Ingles",
       "es": "Espanol"

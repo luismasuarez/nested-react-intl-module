@@ -2,25 +2,27 @@ import React from "react";
 import { IntlProvider } from "react-intl";
 import { LANG_DEFAULT } from "../constants";
 import { useLocale } from "../hooks";
-import { Locale } from "../types";
-import { setStoredLocale } from "../utils";
+import { setLocaleStored } from "../utils";
+
+type Props = {
+  children: React.ReactNode | React.ReactNode[];
+  locales: any;
+};
 
 export const NestedIntlContext = React.createContext({
   locale: LANG_DEFAULT,
-  selectLanguage: (e: Locale) => {
+  selectLanguage: (e: string) => {
     console.log(e);
   },
 });
 
-const NestedIntlProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const { locale, translations, switchLocale } = useLocale();
+export const NestedIntlProvider: React.FC<Props> = ({ children, locales }) => {
+  const { locale, translations, setLocale } = useLocale(locales);
 
-  function selectLanguage(newLocale: Locale) {
-    switchLocale(newLocale);
-    setStoredLocale(newLocale);
-    document.documentElement.lang = newLocale;
+  function selectLanguage(e: string) {
+    setLocale(e);
+    setLocaleStored(e);
+    document.documentElement.lang = e;
   }
 
   return (
@@ -31,5 +33,3 @@ const NestedIntlProvider: React.FC<{ children: React.ReactNode }> = ({
     </NestedIntlContext.Provider>
   );
 };
-
-export default NestedIntlProvider;
