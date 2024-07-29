@@ -27,7 +27,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 
-import { INestedMessages, NestedIntlProvider } from "./dist";
+import { INestedMessages, NestedIntlProvider } from "nested-react-intl";
 import en from "./locales/data/en.json";
 import es from "./locales/data/es.json";
 import { Locale } from "./types/types.ts";
@@ -143,6 +143,6 @@ Este proyecto está licenciado bajo la [MIT License](LICENSE).
 
 ### Capturas
 
-![Image title](Screenshot1.png)
-![Image title](Screenshot2.png)
-![Image title](Screenshot3.png)
+![Image title](https://github.com/luismasuarez/nested-react-intl-module/blob/main/Screenshot1.png)
+![Image title](https://github.com/luismasuarez/nested-react-intl-module/blob/main/Screenshot2.png)
+![Image title](https://github.com/luismasuarez/nested-react-intl-module/blob/main/Screenshot3.png)
