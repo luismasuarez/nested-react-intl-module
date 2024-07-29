@@ -1,6 +1,6 @@
 import React from "react";
 import { IntlProvider } from "react-intl";
-import { LANG_DEFAULT } from "../constants";
+import { NestedIntlContext } from "../context";
 import { useLocale } from "../hooks";
 import { setLocaleStored } from "../utils";
 
@@ -8,13 +8,6 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
   locales: any;
 };
-
-export const NestedIntlContext = React.createContext({
-  locale: LANG_DEFAULT,
-  selectLanguage: (e: string) => {
-    console.log(e);
-  },
-});
 
 export const NestedIntlProvider: React.FC<Props> = ({ children, locales }) => {
   const { locale, translations, setLocale } = useLocale(locales);

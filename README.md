@@ -26,11 +26,11 @@ El provider `NestedIntlProvider` proporciona el contexto para la internacionaliz
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import { INestedMessages, NestedIntlProvider } from "./dist/index";
-import en from "./locales/en.json";
-import es from "./locales/es.json";
 
-export type Locale = "en" | "es";
+import { INestedMessages, NestedIntlProvider } from "./dist";
+import en from "./locales/data/en.json";
+import es from "./locales/data/es.json";
+import { Locale } from "./types/types.ts";
 
 export const LocalesLibrary: Record<Locale, INestedMessages> = {
   en,
@@ -46,18 +46,33 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 );
 ```
 
+### Types
+
+Se debe crear necesariamente un type que sea del tipo del objeto de traducciones, ya que esto permitira una sugerencia a la hora de seleccionar alguno de los id's de cada mensaje anidado y otro type que especifique cuales idiomas manejara tu aplicacion.
+
+```jsx
+import en from "../locales/data/en.json";
+
+export type Locale = "en" | "es";
+
+export type TNestedTranslations = typeof en;
+```
+
+De esta manera lo declaras una sola vez en todo tu codigo.
+
 ### Hooks
 
 #### `useTranslate`
 
-El hook `useTranslate` proporciona una función para traducir las claves de los mensajes.
+El hook `useTranslate` proporciona una función para traducir las claves de los mensajes, este recibe un objeto del tipo .
 
 ```jsx
 import React from "react";
 import { useTranslate } from "nested-react-intl";
+import { TNestedTranslations } from "./types/types";
 
 const AppTitleBar = () => {
-  const { t } = useTranslate();
+  const { t } = useTranslate<TNestedTranslations>();
 
   return <h1>{t("app.title")}</h1>;
 };
@@ -71,8 +86,8 @@ El hook `useNestedIntlContext` proporciona una función para seleccionar los idi
 
 ```jsx
 import React from "react";
-import useNestedIntlContext from "./src/hooks/useNestedIntlContext";
-import { Locale } from "./main";
+import { useNestedIntlContext } from "nested-react-intl";
+import { Locale } from "./types/types";
 
 const LanguageSwitcher = () => {
   const { selectLanguage } = useNestedIntlContext();
@@ -125,3 +140,9 @@ Este proyecto está licenciado bajo la [MIT License](LICENSE).
 ---
 
 **¡Gracias por usar nested-react-intl!** 😃
+
+### Capturas
+
+![Image title](Screenshot1.png)
+![Image title](Screenshot2.png)
+![Image title](Screenshot3.png)

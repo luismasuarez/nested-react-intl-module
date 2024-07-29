@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NestedIntlContext } from "../components/NestedIntlProvider";
+import { NestedIntlContext } from "./NestedIntlContext";
 
 const useNestedIntlContext = () => {
   return useContext(NestedIntlContext);
